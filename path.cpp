@@ -9,8 +9,6 @@
 
 #include "path.h"
 #include <dirent.h>
-#include <stdlib.h>
-#include <iostream>
 
 Path::Path()
 {

@@ -85,6 +85,7 @@ void Shell::exit()
 
 bool Shell::tryPredefinedCommands(const char* command, char* const* args, const int argCount)
 {
+	// The assignment said to implement pwd... but it's already a command?
 	if (strcmp(command, "cd") == 0)
 	{
 		cd(args, argCount);
