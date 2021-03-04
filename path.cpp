@@ -1,4 +1,16 @@
+/*
+* path.cpp
+*
+* Reads in the PATH environment variable and provides easy access to the individual directories.
+*
+* Author: David Reidsma
+* Date: 3/2/2021
+*/
+
 #include "path.h"
+#include <dirent.h>
+#include <stdlib.h>
+#include <iostream>
 
 Path::Path()
 {
@@ -6,7 +18,7 @@ Path::Path()
 
 	std::string directory = "";
 	char c;
-	while ((c = *path++) != NULL)
+	while ((c = *path++) != '\0')
 	{
 		if (c == ':')
 		{
@@ -27,12 +39,13 @@ int Path::find(const std::string& program) const
 	for (int i = 0; i < pathDirectories.size(); i++)
 	{
 		DIR* directory = opendir(pathDirectories[i].c_str());
-		if (directory == NULL)
+		if (directory == NULL) // If the directory doesn't exist, ignore it
 		    continue;
 
 		struct dirent* entry;
 		while ((entry = readdir(directory)) != NULL)
 		{
+			// Read the contents of every directory until we find the file
 			if (program.compare(entry->d_name) == 0)
 			{
 				return i;

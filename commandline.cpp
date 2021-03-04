@@ -5,6 +5,8 @@
 //  Created by Victor Norman on 1/20/15.
 //  Copyright (c) 2015 Victor Norman. All rights reserved.
 //
+//  Edited by David Reidsma on 3/3/2021
+//
 #include <stdlib.h>
 #include <iostream>
 #include <sstream>
@@ -38,9 +40,24 @@ CommandLine::CommandLine(istream &in)
         cout << "CmdLine: read word " << word << endl;
 #endif
 
-        // TODO: code here to process/check word. If it is a good word, then:
-	// the code should check if the word is an ampersand, etc.
-        // tempArgv.push_back(word);
+        if (word.compare("&") == 0)
+        {
+            ampersandSeen = true;
+        }
+        else
+        {
+            // handle environment variables
+            if (word[0] == '$')
+            {
+                char* value = getenv(word.substr(1, word.size() - 1).c_str());
+                if (value == NULL)
+                    word = "";
+                else
+                    word = value;
+            }
+
+            tempArgv.push_back(word);
+        }
     }
 
 #if DEBUGME
