@@ -103,6 +103,11 @@ void Shell::readAndExecuteCommand()
 {
 	CommandLine commandLine(cin);
 	char* command = commandLine.getCommand();
+	if (command == NULL)
+    {
+	    return;
+    }
+
 	int dirIndex = path.find(command);
 	if (dirIndex == -1)
 	{
